@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -13,10 +14,9 @@ public class EnemySpawner : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private ScoreManager _scoreManager;
-    [SerializeField]
-    private AudioSource _audioEnemyDeath;
-    [SerializeField]
-    private AudioSource _audioMissileDeath;
+
+    public UnityEvent OnEnemyDeath;
+    public UnityEvent OnMissileDeath;
 
     private List<Transform> _spawnPoints;
     private List<Enemy> _spawnedEnemies;
@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnMissileDestroyed()
     {
-        _audioMissileDeath.Play();
+        OnMissileDeath.Invoke();
     }
 
     private IEnumerator SpawnEnemies()
@@ -108,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
     private void EnemyDied(Enemy enemy, int points)
     {
         _spawnedEnemies.Remove(enemy);
-        _scoreManager.AddPoints(points);
-        _audioEnemyDeath.Play();
+        _scoreManager?.AddPoints(points);
+        OnEnemyDeath.Invoke();
     }
 }

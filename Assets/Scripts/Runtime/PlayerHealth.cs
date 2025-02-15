@@ -34,7 +34,8 @@ public class PlayerHealth : MonoBehaviour
             if (_health <= 0 )
             {
                 OnDeath.Invoke();
-                Instantiate(_explosion, transform.position, Quaternion.identity);
+                if (_explosion != null )
+                    Instantiate(_explosion, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
 

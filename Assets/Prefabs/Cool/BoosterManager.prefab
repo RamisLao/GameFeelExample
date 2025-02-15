@@ -47,4 +47,4 @@ MonoBehaviour:
   _boosters:
   - {fileID: 1263905955460932115, guid: 3311c487cf332394c962ff5646f7cc4a, type: 3}
   - {fileID: 2196967123936705435, guid: 015c2f1c8bf9cc14d895900cfbb24ecf, type: 3}
-  _rangeForInstantiating: {x: 1, y: 2}
+  _rangeForInstantiating: {x: 15, y: 30}

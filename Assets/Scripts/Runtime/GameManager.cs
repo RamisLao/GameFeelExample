@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,10 +31,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private DissolveScreen _dissolveScreen;
     [SerializeField]
-    private AudioSource _audioStartGame;
-    [SerializeField]
-    private AudioSource _audioPlayerDeath;
-    [SerializeField]
     private TextMeshProUGUI _textPoints;
     [SerializeField]
     private ButtonsVertical _startScreenButtons;
@@ -44,14 +41,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private BoosterSpawner _boosterManager;
 
-    private void Awake()
-    {
-        GoBackToStartScreen();
-    }
+    public UnityEvent OnStartGame;
+    public UnityEvent OnPlayerDeath;
 
     private void Start()
     {
-        _musicManager.StartMainMusic();
+        _musicManager?.StartMainMusic();
+        GoBackToStartScreen();
     }
 
     public void StartNewGame()
@@ -85,8 +81,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartNewGameCoroutine()
     {
-        _dissolveScreen.Appear();
-        _audioStartGame.Play();
+        _dissolveScreen?.Appear();
+        OnStartGame.Invoke();
         Cursor.visible = false;
 
         yield return new WaitForSeconds(_timeForAppear);
@@ -94,54 +90,61 @@ public class GameManager : MonoBehaviour
         GameObject spaceship = Instantiate(_spaceship, 
             _spaceshipStartingPos.position, _spaceship.transform.rotation);
         PlayerHealth health = spaceship.GetComponent<PlayerHealth>();
-        health.OnDeath.AddListener(OnPlayerDeath);
-        health.OnDamage.AddListener(_uiLife.HealthChanged);
-        health.OnHealing.AddListener(_uiLife.HealthChanged);
-        _uiLife.HealthChanged(health.StartingHealth);
-        _scoreManager.ResetScore();
+        health.OnDeath.AddListener(OnPlayerHasDied);
+        if (_uiLife != null)
+        {
+            health.OnDamage.AddListener(_uiLife.HealthChanged);
+            health.OnHealing.AddListener(_uiLife.HealthChanged);
+            _uiLife.HealthChanged(health.StartingHealth);
+        }
+        _scoreManager?.ResetScore();
 
         _hudPanel.SetActive(true);
 
         _startScreenPanel.SetActive(false);
         _endScreenPanel.SetActive(false);
 
-        _dissolveScreen.Disappear();
-        _musicManager.StartInGameMusic();
+        _dissolveScreen?.Disappear();
+        _musicManager?.StartInGameMusic();
 
         yield return new WaitForSeconds(_timeBeforeStartSpawningEnemies);
 
         _enemySpawner.StartSpawning();
-        _boosterManager.StartSpawning();
+        _boosterManager?.StartSpawning();
     }
 
     private IEnumerator GoToEndScreenCoroutine()
     {
         _enemySpawner.StopSpawning();
-        _boosterManager.StopSpawning();
+        _boosterManager?.StopSpawning();
 
         yield return new WaitForSeconds(_timeForAppear * 2);
 
         _endScreenPanel.SetActive(true);
         _endScreenButtons.EnableButtons();
-        _musicManager.StartMainMusic();
+        _musicManager?.StartMainMusic();
     }
 
-    private void OnPlayerDeath()
+    private void OnPlayerHasDied()
     {
-        _audioPlayerDeath.Play();
-        _musicManager.StopMusic();
+        OnPlayerDeath.Invoke();
+        _musicManager?.StopMusic();
         _hudPanel.SetActive(false);
 
-        string finalPoints;
-        if (_scoreManager.CurrentScore != 1)
+        if (_textPoints != null)
         {
-            finalPoints = $"{_scoreManager.CurrentScore} puntos";
+            string finalPoints;
+            if (_scoreManager != null &&
+                _scoreManager.CurrentScore != 1)
+            {
+                finalPoints = $"{_scoreManager.CurrentScore} puntos";
+            }
+            else
+            {
+                finalPoints = "1 punto";
+            }
+            _textPoints.text = finalPoints;
         }
-        else
-        {
-            finalPoints = "1 punto";
-        }
-        _textPoints.text = finalPoints;
 
         GoToEndScreen();
     }

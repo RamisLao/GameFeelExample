@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeForAppear: 1
-  _timeBeforeStartSpawningEnemies: 1
+  _timeBeforeStartSpawningEnemies: 7
   _startScreenPanel: {fileID: 0}
   _endScreenPanel: {fileID: 0}
   _hudPanel: {fileID: 0}
@@ -57,13 +57,41 @@ MonoBehaviour:
   _scoreManager: {fileID: 0}
   _musicManager: {fileID: 0}
   _dissolveScreen: {fileID: 0}
-  _audioStartGame: {fileID: 5453205274167143849}
-  _audioPlayerDeath: {fileID: 6386558859330859280}
   _textPoints: {fileID: 0}
   _startScreenButtons: {fileID: 0}
   _endScreenButtons: {fileID: 0}
   _uiLife: {fileID: 0}
   _boosterManager: {fileID: 0}
+  OnStartGame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5453205274167143849}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6386558859330859280}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &5453205274167143849
 AudioSource:
   m_ObjectHideFlags: 0

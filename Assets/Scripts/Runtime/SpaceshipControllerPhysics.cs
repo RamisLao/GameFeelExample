@@ -10,6 +10,10 @@ public class SpaceshipControllerPhysics : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
+    private bool _usePhysics = false;
+    [SerializeField]
+    private float _translateSpeed = 5f;
+    [SerializeField]
     public float _thrustForce = 10f;
     [SerializeField]
     public float drag = 2f;
@@ -30,15 +34,9 @@ public class SpaceshipControllerPhysics : MonoBehaviour
     [SerializeField]
     private float _attackBoosterDuration = 10;
 
-    [Header("Audio")]
-    [SerializeField]
-    private AudioSource _audioSource;
-    [SerializeField]
-    private AudioClip _audioSimpleAttack;
-    [SerializeField]
-    private AudioClip _audioBoostedAttack;
-
     public UnityEvent OnBoosted;
+    public UnityEvent OnSimpleAttack;
+    public UnityEvent OnBoostedAttack;
 
     private Vector2 _moveInput;
     private CharacterInput _playerInput;
@@ -75,10 +73,18 @@ public class SpaceshipControllerPhysics : MonoBehaviour
         _playerInput.Player.Disable();
     }
 
+    private void Update()
+    {
+        if (!_usePhysics)
+        {
+            ApplyTranslateMovement();
+        }
+    }
+
     private void FixedUpdate()
     {
-        ApplyPhysicsMovement();
-        ClampPositionToScreenBounds();
+        if (_usePhysics)
+            ApplyPhysicsMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -110,9 +116,19 @@ public class SpaceshipControllerPhysics : MonoBehaviour
         _moveInput = context.ReadValue<Vector2>();
     }
 
+    private void ApplyTranslateMovement()
+    {
+        Vector3 moveVector = new Vector3(_moveInput.x, _moveInput.y, 0) * _translateSpeed * Time.deltaTime;
+        transform.Translate(moveVector, Space.World);
+
+        ClampPositionToScreenBounds();
+    }
+
     private void ApplyPhysicsMovement()
     {
         _rb.AddForce(_moveInput * _thrustForce);
+
+        ClampPositionToScreenBounds();
     }
 
     private void ClampPositionToScreenBounds()
@@ -140,7 +156,7 @@ public class SpaceshipControllerPhysics : MonoBehaviour
         {
             Instantiate(_missileForwardPrefab, _singleAttackOrigin.position, 
                 _missileForwardPrefab.transform.rotation);
-            _audioSource.PlayOneShot(_audioSimpleAttack);
+            OnSimpleAttack.Invoke();
         }
         else
         {
@@ -148,7 +164,7 @@ public class SpaceshipControllerPhysics : MonoBehaviour
                 _missileForwardPrefab.transform.rotation);
             Instantiate(_missileForwardPrefab, _doubleAttackOrigin2.position,
                 _missileForwardPrefab.transform.rotation);
-            _audioSource.PlayOneShot(_audioBoostedAttack);
+            OnBoostedAttack.Invoke();
         }
     }
 

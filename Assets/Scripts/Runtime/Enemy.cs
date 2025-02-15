@@ -50,7 +50,8 @@ public class Enemy : MonoBehaviour
 
     private void DestroyEnemy()
     {
-        Instantiate(_explosion, transform.position, Quaternion.identity);
+        if (_explosion != null)
+            Instantiate(_explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

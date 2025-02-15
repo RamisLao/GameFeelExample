@@ -260,8 +260,36 @@ MonoBehaviour:
   - {fileID: 5688801892055332164, guid: 4c77a4f18f3869f40bbf164e36b4b22d, type: 3}
   - {fileID: 5688801892055332164, guid: 4c77a4f18f3869f40bbf164e36b4b22d, type: 3}
   _scoreManager: {fileID: 0}
-  _audioEnemyDeath: {fileID: 280213971594483626}
-  _audioMissileDeath: {fileID: 5700507311762642192}
+  OnEnemyDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 280213971594483626}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMissileDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5700507311762642192}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &280213971594483626
 AudioSource:
   m_ObjectHideFlags: 0
