@@ -1,9 +1,18 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum EnemyType
+{
+    Triangle,
+    Circle,
+    Square
+}
+
 public class Enemy : MonoBehaviour
 {
     [Header("Enemy")]
+    [SerializeField]
+    private EnemyType _enemyType;
     [SerializeField]
     private int _points = 1;
     [SerializeField]
@@ -17,6 +26,8 @@ public class Enemy : MonoBehaviour
 
     public UnityEvent<Enemy, int> OnDeath;
     public UnityEvent OnDamage;
+
+    public EnemyType EnemyType => _enemyType;
 
     private int _health;
 

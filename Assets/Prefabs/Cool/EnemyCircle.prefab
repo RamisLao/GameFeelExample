@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c205cd088bb9e5a48b2ae4cfb02f4f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 1
   _points: 3
   _startingHealth: 2
   _explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}

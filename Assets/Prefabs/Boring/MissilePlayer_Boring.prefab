@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5744406117802788153}
   - component: {fileID: 4143315168530680139}
   - component: {fileID: 7187842290673680690}
+  - component: {fileID: 5196157098237161601}
   m_Layer: 9
   m_Name: MissilePlayer_Boring
   m_TagString: Missile
@@ -140,9 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e622f7cc249cc674297dbd90bc6c0051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _speed: 7
   _movesUp: 1
-  _explosionPrefab: {fileID: 0}
+  _explosionPrefab: {fileID: 8038344524183138613, guid: 0277167a12290af47801444830a2be97, type: 3}
   OnMissileDestroyed:
     m_PersistentCalls:
       m_Calls: []
@@ -186,3 +187,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &5196157098237161601
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4129543468014069011}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3582ede9edda50e4dae338da850a8e35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

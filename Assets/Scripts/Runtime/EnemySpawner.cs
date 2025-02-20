@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private ScoreManager _scoreManager;
+    [SerializeField]
+    private ImpactFreeze _impactFreeze;
 
     public UnityEvent OnEnemyDeath;
     public UnityEvent OnMissileDeath;
@@ -107,6 +109,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemyDied(Enemy enemy, int points)
     {
+        if (enemy.EnemyType == EnemyType.Square &&
+            _impactFreeze != null)
+        {
+            _impactFreeze.StartFreeze();
+        }
+
         _spawnedEnemies.Remove(enemy);
         _scoreManager?.AddPoints(points);
         OnEnemyDeath.Invoke();

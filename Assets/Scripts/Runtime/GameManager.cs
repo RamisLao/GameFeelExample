@@ -40,8 +40,11 @@ public class GameManager : MonoBehaviour
     private UILife _uiLife;
     [SerializeField]
     private BoosterSpawner _boosterManager;
+    [SerializeField]
+    private CameraShake _cameraShake;
 
     public UnityEvent OnStartGame;
+    public UnityEvent OnPlayerDamaged;
     public UnityEvent OnPlayerDeath;
 
     private void Start()
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
             _spaceshipStartingPos.position, _spaceship.transform.rotation);
         PlayerHealth health = spaceship.GetComponent<PlayerHealth>();
         health.OnDeath.AddListener(OnPlayerHasDied);
+        health.OnDamage.AddListener(OnPlayerHasBeenDamaged);
         if (_uiLife != null)
         {
             health.OnDamage.AddListener(_uiLife.HealthChanged);
@@ -123,6 +127,14 @@ public class GameManager : MonoBehaviour
         _endScreenPanel.SetActive(true);
         _endScreenButtons.EnableButtons();
         _musicManager?.StartMainMusic();
+    }
+
+    private void OnPlayerHasBeenDamaged(int _)
+    {
+        if (_cameraShake != null)
+        {
+            _cameraShake.StartShake();
+        }
     }
 
     private void OnPlayerHasDied()

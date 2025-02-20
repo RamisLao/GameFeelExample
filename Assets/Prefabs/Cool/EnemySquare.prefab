@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ad029d86d71d64d9739eadf4280fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyType: 2
   _points: 5
   _startingHealth: 5
   _explosion: {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
